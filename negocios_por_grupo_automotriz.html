@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Negocios por Grupo Automotriz</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #14213d;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --primary: #12355b;
+      --primary-2: #2563eb;
+      --chip: #eef4ff;
+      --chip-text: #1d4ed8;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top left, #dceafe 0, transparent 32%), var(--bg);
+    color: var(--text);
+    }
+
+    .page {
+        flex: 1;
+        max-width: 1240px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 34px 22px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f2a44, #174a7c 58%, #2563eb);
+      color: white;
+      border-radius: 26px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.10);
+      right: -120px;
+      top: -160px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: 16px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .kpi {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 18px;
+      padding: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .kpi span { color: rgba(255,255,255,.75); font-size: 13px; }
+
+    .toolbar {
+      margin: 22px 0;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 260px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 16px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .10);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 18px;
+    }
+
+    .group-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, .07);
+      overflow: hidden;
+    }
+
+    .group-head {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+    }
+
+    .group-title {
+      margin: 0;
+      font-size: 19px;
+      letter-spacing: -.02em;
+    }
+
+    .group-meta {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill-count {
+      white-space: nowrap;
+      color: #0f5132;
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .importer {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .importer:last-child { border-bottom: none; }
+
+    .importer-name {
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--primary-2);
+      flex: 0 0 auto;
+    }
+
+    .details {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .label { color: var(--muted); font-weight: 700; }
+    .value { color: #334155; }
+
+    .chips {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .chip {
+      background: var(--chip);
+      color: var(--chip-text);
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      background: white;
+      border-radius: var(--radius);
+      border: 1px dashed var(--line);
+    }
+
+    @media (max-width: 760px) {
+      .hero { padding: 26px; }
+      .kpis { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .detail-row { grid-template-columns: 1fr; gap: 3px; }
+    }
+    .footer {
+    width: 100%;
+    padding: 18px;
+    text-align: center;
+    background: #12355b;
+    color: white;
+    border-top: 3px solid #2563eb;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+
+    .footer-line {
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.4px;
+        line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>Negocios por Grupo Automotriz</h1>
+      <p>Departamento de Producto-Grupo Purdy</p>
+      <div class="kpis">
+        <div class="kpi"><strong id="kpiGrupos">0</strong><span>Grupos</span></div>
+        <div class="kpi"><strong id="kpiImportadores">0</strong><span>Importadores únicos</span></div>
+        <div class="kpi"><strong id="kpiNegocios">0</strong><span>Negocios únicos agrupados</span></div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchInput" class="search" type="search" placeholder="Buscar por grupo, importador, razón social, cédula o negocio..." />
+      <button class="btn" onclick="toggleAll()">Expandir / contraer</button>
+    </section>
+
+    <section id="content" class="grid"></section>
+  </main>
+  <footer class="footer">
+    <div class="footer-line">
+        Desarrollado por Pedro Abarca
+    </div>
+
+    <div class="footer-line">
+        Información suministrada por Diego Ruíz
+    </div>
+  </footer>
+  <script>
+    const DATA = [{"grupo": "AMBACAR", "importadores": [{"importador": "GREATWALL AUTOS S.A.", "razones": ["GREATWALL AUTOS S.A."], "cedulas": ["3-101-337583", "3-101-337584", "3-101-337585", "3-101-337586", "3-101-337587", "3-101-337588", "3-101-337589", "3-101-337590", "3-101-337591"], "negocios": ["DFSK", "GWM", "HAVAL", "REPUESTOS", "SERES", "SHINERAY", "SWM", "TALLER DE SERVICIO", "USADOS"], "count": 9}], "total_importadores": 1, "total_negocios": 9}, {"grupo": "AUTOMOTRIZ ALEMANA", "importadores": [{"importador": "AUTOMOTRIZ ALEMANA DE COSTA RICA S.A.", "razones": ["AUTOMOTRIZ ALEMANA DE COSTA RICA S.A."], "cedulas": ["3-101-330680"], "negocios": ["PORSCHE", "REPUESTOS", "TALLER DE SERVICIO"], "count": 3}], "total_importadores": 1, "total_negocios": 3}, {"grupo": "CORI CAR", "importadores": [{"importador": "CORI CAR S.A.", "razones": ["Cori Car de Centroamérica S.A."], "cedulas": ["3-101-568373"], "negocios": ["CHERY"], "count": 1}, {"importador": "GRAND MOTORS S.A.", "razones": ["Cori Car Sociedad Anónima", "Cori Car de Centroamérica S.A.", "Grand Motors de Centroamérica S.A"], "cedulas": ["3-101-568373", "3-101-741864", "3-101-853263"], "negocios": ["DONGFENG", "FAW BESTUNE", "JAC", "JOYLONG", "KARRY", "RED DE CARGA", "REPUESTOS", "SEMINUEVOS", "TALLER DE SERVICIO"], "count": 9}], "total_importadores": 2, "total_negocios": 10}, {"grupo": "CORI MOTORS", "importadores": [{"importador": "Almacén Mozel S.A", "razones": ["Almacén Mozel S.A"], "cedulas": [], "negocios": ["ARTELEC"], "count": 1}, {"importador": "CORI MOTORS DE CENTROAMERICA S.A.", "razones": ["Comercializadora de Vehículos C.V. S.A.", "Cori Motors S.A."], "cedulas": ["3-101-576403", "3-101-654157"], "negocios": ["BYD", "FOTON", "TALLER DE SERVICIO (CORI SERVICE)"], "count": 3}, {"importador": "Cori Motors S.A.", "razones": ["Cori Motors S.A."], "cedulas": ["3-101-576403"], "negocios": ["RED DE CARGA CORI", "REPUESTOS (REPUESTOS CORI)", "USADOS (CORI USADOS)"], "count": 3}, {"importador": "GMG Servicios Costa Rica S.A", "razones": ["GMG Servicios Costa Rica S.A"], "cedulas": [], "negocios": ["GRUPO MONGE"], "count": 1}, {"importador": "HORIZONTES CIELO AZUL MOVILIDAD CENTROAMERICA S.R.L.", "razones": ["Cori Motors S.A."], "cedulas": ["3-101-576403"], "negocios": ["NIO"], "count": 1}, {"importador": "Localiza Rent a Car", "razones": ["Servicios de Alquiler de Vehículos S.A"], "cedulas": ["3-101-118458"], "negocios": ["RENTACAR"], "count": 1}, {"importador": "MOTOS SUKI SOCIEDAD ANONIMA", "razones": ["MOTOS SUKI SOCIEDAD ANONIMA"], "cedulas": [], "negocios": ["MOTOS SUZUKI"], "count": 1}, {"importador": "SMART CARS S.A.", "razones": ["Comercializadora de Vehículos C.V. S.A.", "Cori Motors S.A."], "cedulas": ["3-101-576403", "3-101-654157"], "negocios": ["BAIC", "BAOJUN", "BYD", "FOTON", "KAIYI", "WULING", "YUDO"], "count": 7}], "total_importadores": 8, "total_negocios": 18}, {"grupo": "DANISSA", "importadores": [{"importador": "AGENCIA DATSUN S.A.", "razones": ["AGENCIA DATSUN S.A."], "cedulas": ["3-101-007435"], "negocios": ["NISSAN", "REPUESTOS", "TALLER DE SERVICIO", "USADOS"], "count": 4}, {"importador": "CORPORACION MOTORTEC S.A.", "razones": ["CORPORACION MOTORTEC S.A."], "cedulas": ["3-101-209258"], "negocios": ["AUDI"], "count": 1}, {"importador": "Corporación D S.A", "razones": ["Corporación D S.A"], "cedulas": ["3-101-060018"], "negocios": ["SERVICIOS INDUSTRIALES Y CONSTRUCCION"], "count": 1}, {"importador": "Danissa Credit S.A", "razones": ["Danissa Credit S.A"], "cedulas": ["3-101-209259"], "negocios": ["DANISSA CREDITS"], "count": 1}, {"importador": "Inversiones Mundiales de Seguridad de Occidente S.A.", "razones": ["Inversiones Mundiales de Seguridad de Occidente S.A."], "cedulas": ["3-101-209257"], "negocios": ["SEGURIDAD IMSCO"], "count": 1}, {"importador": "Línea de Acción S.A", "razones": ["Línea de Acción S.A"], "cedulas": ["3-101-108346"], "negocios": ["AVIS"], "count": 1}, {"importador": "Servicios Auxiliares Industriales S.A. (SAISA).", "razones": ["Servicios Auxiliares Industriales S.A. (SAISA)."], "cedulas": ["3-101-042852"], "negocios": ["TRANSPORTE SAISA"], "count": 1}], "total_importadores": 7, "total_negocios": 10}, {"grupo": "DFAC", "importadores": [{"importador": "MAGMA AUTOMOTIVE DEALERSHIP S.A.", "razones": ["MAGMA AUTOMOTIVE DEALERSHIP S.A."], "cedulas": ["3-101-905266"], "negocios": ["DFAC", "REPUESTOS", "TALLER DE SERVICIO"], "count": 3}], "total_importadores": 1, "total_negocios": 3}, {"grupo": "EUROBUS", "importadores": [{"importador": "EUROBUS S.A.", "razones": ["EUROBUS S.A."], "cedulas": ["3-101-209228"], "negocios": ["REPUESTOS", "SCANIA", "TALLER DE SERVICIO"], "count": 3}], "total_importadores": 1, "total_negocios": 3}, {"grupo": "FACO", "importadores": [{"importador": "FRANZ AMRHEIN Y COMPAÑIA S.A.", "razones": ["FRANZ AMRHEIN Y COMPAÑIA S.A.", "S.A. Vehículos Faco"], "cedulas": ["3-101-004126", "3-101-007432"], "negocios": ["HONDA", "LEAPMOTOR", "REPUESTOS", "TALLER DE SERVICIO", "USADOS"], "count": 5}], "total_importadores": 1, "total_negocios": 5}, {"grupo": "GRUPO COFIÑO", "importadores": [{"importador": "EURO ADVANCE S.A.", "razones": ["EURO ADVANCE S.A."], "cedulas": ["3-101-255959"], "negocios": ["APRILIA", "MOTO GUZZI", "PIAGGIO", "RENAULT", "REPUESTOS", "TALLER DE SERVICIO", "VESPA"], "count": 7}, {"importador": "MOTORES BRITANICOS DE COSTA RICA S.A.", "razones": ["MOTORES BRITANICOS DE COSTA RICA S.A."], "cedulas": ["3-101-120055"], "negocios": ["JAGUAR", "LAND ROVER"], "count": 2}, {"importador": "OMOJAE MOTORS CR S.A.", "razones": ["OMOJAE MOTORS CR S.A."], "cedulas": ["3-101-874483"], "negocios": ["JAECOO", "OMODA"], "count": 2}], "total_importadores": 3, "total_negocios": 11}, {"grupo": "GRUPO KAUFMAN", "importadores": [{"importador": "AUTOSTAR VEHICULOS S.A.", "razones": ["AutoStar Vehículos S.A."], "cedulas": ["3-101-336780", "3-101-336781", "3-101-336782", "3-101-336783", "3-101-336784", "3-101-336785", "3-101-336786", "3-101-336787", "3-101-336788", "3-101-336789", "3-101-336790"], "negocios": ["CAMIONES Y TRANSPORTE", "FIAT", "FREIGHTLINER", "JEEP", "LEASING", "MERCEDES BENZ", "RAM", "REPUESTOS", "SEGUROS", "TALLER DE SERVICIO", "USADOS"], "count": 11}, {"importador": "PACIFIC MOTORS, INVESTMENTS AND ENTERPRISES S.A.", "razones": ["PACIFIC MOTORS, INVESTMENTS AND ENTERPRISES S.A."], "cedulas": ["3-101-657544", "3-101-657545", "3-101-657546", "3-101-657547"], "negocios": ["FOTON", "GOLDEN DRAGON", "MAXUS", "NETA"], "count": 4}], "total_importadores": 2, "total_negocios": 15}, {"grupo": "GRUPO LOS TRES", "importadores": [{"importador": "GRUPO LOS TRES GLT S.A.", "razones": ["GRUPO LOS TRES GLT S.A."], "cedulas": ["3-101-280883"], "negocios": ["REPUESTOS", "TALLER DE SERVICIO", "VOLVO"], "count": 3}], "total_importadores": 1, "total_negocios": 3}, {"grupo": "GRUPO PURDY", "importadores": [{"importador": "AUTOMOTRIZ CR CA S.A.", "razones": ["AUTOMOTRIZ CR CA S.A."], "cedulas": [], "negocios": ["CF Moto", "FAW ( COMERCIAL)", "FORD", "HIGER", "Triumph", "VOLKSWAGEN", "VOLKSWAGEN TB", "XPENG"], "count": 8}, {"importador": "Auto Parts", "razones": [], "cedulas": [], "negocios": [], "count": 0}, {"importador": "Carrocería y Pintura", "razones": ["Purdy Auto S.A."], "cedulas": [], "negocios": [], "count": 0}, {"importador": "Financiera CAFSA SA", "razones": ["Financiera CAFSA SA"], "cedulas": [], "negocios": ["CAFSA"], "count": 1}, {"importador": "Movilidad", "razones": ["Mobility S.A."], "cedulas": [], "negocios": ["Purdy Renting", "Te llevo", "Yo Voy"], "count": 3}, {"importador": "PURDY MOTOR S.A.", "razones": ["PURDY MOTOR S.A."], "cedulas": ["3-101-005744"], "negocios": ["HINO", "LEXUS", "SUBARU", "TOYOTA"], "count": 4}, {"importador": "Purdy Accesorios", "razones": [], "cedulas": [], "negocios": [], "count": 0}, {"importador": "Purdy Center", "razones": ["PURDY MOTOR S.A."], "cedulas": ["3-101-005744"], "negocios": [], "count": 0}, {"importador": "Purdy Seguros SA", "razones": [], "cedulas": [], "negocios": ["INS", "MAFRE"], "count": 2}], "total_importadores": 9, "total_negocios": 18}, {"grupo": "GRUPO Q", "importadores": [{"importador": "ACTIVE MOTORS S.A.", "razones": ["Automotriz Q de Costa Rica S.A.", "Grupo Q Costa Rica S.A."], "cedulas": ["3-101-314115"], "negocios": ["ARCFOX", "FORLAND", "GWM", "TVS", "VENTO"], "count": 5}, {"importador": "CORPORACION GRUPO Q COSTA RICA S.A.", "razones": ["Arrendamiento de Vehículos Q S.A.", "Credi Q S.A.", "Grupo Q Costa Rica S.A.", "Hyundai Costa Rica S.A.", "Servicios de Mantenimiento Automotriz S.M.A. S.A."], "cedulas": ["3-101-314115", "3-101-318538", "3-101-325206", "3-101-382902", "3-101-576402"], "negocios": ["AUTOPITS", "CADILLAC", "CARROCERÍA Y PINTURA", "CHEVROLET", "HYUNDAI", "ISUZU", "PRODUCTOS AUTOMOTRICES", "REPUESTOS", "SMART RENT A CAR", "TALLER DE SERVICIO", "USADOS"], "count": 11}, {"importador": "CrediQ Inversiones CR S.A.", "razones": ["Credi Q S.A."], "cedulas": ["3-101-318538"], "negocios": ["CREDI Q"], "count": 1}], "total_importadores": 3, "total_negocios": 17}, {"grupo": "INCHCAPE", "importadores": [{"importador": "Arrienda Express S.A. 3-101-664705", "razones": ["Inchcape Financial Services S.A."], "cedulas": ["3-101-717466"], "negocios": ["ARRIENDA EXPRESS"], "count": 1}, {"importador": "VEHICULOS DE TRABAJO S.A.", "razones": ["Inchcape Costa Rica S.A."], "cedulas": ["3-101-007421"], "negocios": ["CARROCERÍA Y PINTURA", "CHANGAN", "JAC", "REPUESTOS", "SUZUKI", "TALLER DE SERVICIO", "USADOS"], "count": 7}], "total_importadores": 2, "total_negocios": 8}, {"grupo": "KORE AUTOS", "importadores": [{"importador": "KORE AUTOS DE COSTA RICA S.A.", "razones": ["KORE AUTOS DE COSTA RICA S.A."], "cedulas": ["3-101-323711"], "negocios": ["FAW", "KING LONG", "TALLER", "USADOS"], "count": 4}], "total_importadores": 1, "total_negocios": 4}, {"grupo": "MATRA", "importadores": [{"importador": "MAQUINARIA Y TRACTORES LTDA.", "razones": ["MAQUINARIA Y TRACTORES LTDA."], "cedulas": ["3-002-003310"], "negocios": ["AGRICOLA", "ALQUILER", "AUTOLUB", "BUSES", "CAMIONES", "CAT", "FINANCIAMIENTO", "FOTON", "GENERADORES", "INTERNATIONAL", "JOHN DEERE", "LABORATORIO DE ACEITES", "LLANTAS", "MACK", "MAQUINARIA CONSTRUCCION", "METSO", "MOTORES MARINOS", "REPUESTOS", "TALLER DE SERVICIO", "USADOS", "VOLVO"], "count": 21}], "total_importadores": 1, "total_negocios": 21}, {"grupo": "MOTORES BRITANICOS", "importadores": [{"importador": "GRUPO AUTO COMERCIAL COSTARRICENSE GRACCRI S.A.", "razones": ["GRUPO AUTO COMERCIAL COSTARRICENSE GRACCRI S.A."], "cedulas": ["3-101-817684"], "negocios": ["GAC"], "count": 1}, {"importador": "MOTORES BRITANICOS DE COSTA RICA S.A.", "razones": ["Autopartes Británicas S.A.", "Solo Cuadras S.A."], "cedulas": ["3-101-124176", "3-101-277641"], "negocios": ["CAN-AM", "REPUESTOS", "SEA-DOO", "TALLER DE SERVICIO", "USADOS"], "count": 5}, {"importador": "ROYAL MOTORS DE COSTA RICA R.M.C. S.A.", "razones": ["ROYAL MOTORS DE COSTA RICA R.M.C. S.A."], "cedulas": ["3-101-657196"], "negocios": ["M.G."], "count": 1}], "total_importadores": 3, "total_negocios": 7}, {"grupo": "MTS", "importadores": [{"importador": "MTS MULTISERVICIOS DE COSTA RICA S.A.", "razones": ["MTS MULTISERVICIOS DE COSTA RICA S.A."], "cedulas": ["3-101-677860"], "negocios": ["DIVISION LLANTAS", "EQUIPOS DE LIMPIEZA INDUSTRIAL", "LUBRICANTES Y GRASAS INDUSTRIALES", "MAQUINARIA LIGERA", "REPUESTOS", "SINOTRUK", "TALLER DE SERVICIO", "XCMG", "ZX AUTO"], "count": 9}], "total_importadores": 1, "total_negocios": 9}, {"grupo": "QUALITY MOTORS", "importadores": [{"importador": "GRUPO QUALITY MOTORS S.A.", "razones": ["Grupo Quality Motors S.A", "Quality Motors Q.M. S.A."], "cedulas": ["3-101-311267", "3-101-670336", "3-101-670337", "3-101-670338", "3-101-670339", "3-101-670340", "3-101-670341", "3-101-670342"], "negocios": ["JETOUR", "KIA", "LYNK & CO", "MAZDA", "REPUESTOS", "SOUEAST", "TALLER DE SERVICIO", "USADOS"], "count": 8}], "total_importadores": 1, "total_negocios": 8}, {"grupo": "RED MOTORS", "importadores": [{"importador": "BAVARIAN MOTORS C.R. S.A.", "razones": ["BAVARIAN MOTORS C.R. S.A."], "cedulas": ["3-101-574311"], "negocios": ["BMW", "BMW MOTORRAD", "CARROCERÍA Y PINTURA", "MINI", "REPUESTOS", "TALLER DE SERVICIO", "USADOS"], "count": 7}, {"importador": "OTOBAI MOTORS SOCIEDAD ANONIMA", "razones": ["Otobai Motors S.A."], "cedulas": ["3-101-654157"], "negocios": ["INDIAN", "KAWASAKI", "POLARIS"], "count": 3}], "total_importadores": 2, "total_negocios": 10}, {"grupo": "SINOMOTORS", "importadores": [{"importador": "SINOMOTORS COSTA RICA S.A.", "razones": ["SINOMOTORS COSTA RICA S.A."], "cedulas": ["3-101-831627"], "negocios": ["REPUESTOS", "TALLER", "USADOS", "VGV"], "count": 4}], "total_importadores": 1, "total_negocios": 4}, {"grupo": "VEINSA", "importadores": [{"importador": "AGE Capital S.A.", "razones": ["Age Capital S.A"], "cedulas": ["3-101-700021"], "negocios": ["AGE CAPITAL Financiera"], "count": 1}, {"importador": "Administración de Flotas y Equipos A.F.E. S.A.", "razones": ["Administración de Flotas y Equipos A.F.E. S.A."], "cedulas": ["3-101-143715"], "negocios": ["AFE"], "count": 1}, {"importador": "Agencia de Aduanas AIMI S.A.", "razones": ["Agencia de Aduanas AIMI S.A."], "cedulas": ["3-101-140645"], "negocios": ["AIMI"], "count": 1}, {"importador": "Línea de Alquiler de Vehículos L.A.V. S.A.", "razones": ["Línea de Alquiler de Vehículos L.A.V. S.A."], "cedulas": ["3-101-143714"], "negocios": ["SIXT RENT A CAR"], "count": 1}, {"importador": "Rainforest Aerial Tram S.A.", "razones": ["Rainforest Aerial Tram S.A."], "cedulas": ["3-101-115931"], "negocios": ["RAINFOREST"], "count": 1}, {"importador": "VEHICULOS INTERNACIONALES VEINSA S.A.", "razones": ["VEHICULOS INTERNACIONALES VEINSA S.A."], "cedulas": ["3-101-007323"], "negocios": ["CITROEN", "FARIZON", "FUSO", "GEELY", "JMC", "KGM", "MAHINDRA", "MASERATI", "MITSUBISHI", "PEUGEOT", "REPUESTOS", "RIDDARA", "TALLER DE SERVICIO", "VEINSA USADOS", "ZEEKR"], "count": 15}], "total_importadores": 6, "total_negocios": 20}];
+    const state = { expanded: true };
+
+    const unique = arr => [...new Set(arr.filter(Boolean))];
+    const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[ch]));
+
+    function formatList(values) {
+      if (!values || !values.length) return '<span class="value">—</span>';
+      return values.map(v => `<span>${escapeHtml(v)}</span>`).join('<br>');
+    }
+
+    function render(data = DATA) {
+      document.getElementById('kpiGrupos').textContent = data.length;
+      document.getElementById('kpiImportadores').textContent = data.reduce((acc, g) => acc + g.total_importadores, 0);
+      document.getElementById('kpiNegocios').textContent = data.reduce((acc, g) => acc + g.total_negocios, 0);
+
+      const content = document.getElementById('content');
+      if (!data.length) {
+        content.className = '';
+        content.innerHTML = '<div class="empty">No se encontraron resultados con ese filtro.</div>';
+        return;
+      }
+      content.className = 'grid';
+      content.innerHTML = data.map(group => `
+        <article class="group-card">
+          <header class="group-head">
+            <div>
+              <h2 class="group-title">${escapeHtml(group.grupo)}</h2>
+              <div class="group-meta">${group.total_importadores} importadores · ${group.total_negocios} negocios</div>
+            </div>
+            <span class="pill-count">${group.total_negocios} negocios</span>
+          </header>
+          ${state.expanded ? group.importadores.map(item => `
+            <section class="importer">
+              <div class="importer-name"><span class="dot"></span>${escapeHtml(item.importador)}</div>
+              <div class="details">
+                <div class="detail-row"><div class="label">Razón social</div><div class="value">${formatList(item.razones)}</div></div>
+                <div class="detail-row"><div class="label">Cédula</div><div class="value">${formatList(item.cedulas)}</div></div>
+              </div>
+              <div class="label">Negocios</div>
+              <div class="chips">
+                ${item.negocios.length ? item.negocios.map(n => `<span class="chip">${escapeHtml(n)}</span>`).join('') : '<span class="chip">Sin negocio especificado</span>'}
+              </div>
+            </section>
+          `).join('') : ''}
+        </article>
+      `).join('');
+    }
+
+    function applyFilter() {
+      const term = document.getElementById('searchInput').value.toLowerCase().trim();
+      if (!term) return render(DATA);
+      const filtered = DATA.map(group => {
+        const importadores = group.importadores.filter(item => {
+          const text = [group.grupo, item.importador, ...(item.razones || []), ...(item.cedulas || []), ...(item.negocios || [])].join(' ').toLowerCase();
+          return text.includes(term);
+        });
+        return { ...group, importadores, total_importadores: importadores.length, total_negocios: importadores.reduce((a, i) => a + i.count, 0) };
+      }).filter(g => g.importadores.length || g.grupo.toLowerCase().includes(term));
+      render(filtered);
+    }
+
+    function toggleAll() {
+      state.expanded = !state.expanded;
+      applyFilter();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', applyFilter);
+    render();
+  </script>
+</body>
+</html>
