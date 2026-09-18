@@ -653,38 +653,13 @@
     function initializeApp() {
       if (appInitialized) return;
       appInitialized = true;
+      state.expanded = true;
       initLocationFilters();
       render();
     }
 
-    function unlockApp() {
-      document.getElementById('authGate').hidden = true;
-      document.getElementById('appRoot').hidden = false;
-      document.getElementById('siteFooter').hidden = false;
-      initializeApp();
-    }
-
-    function sessionIsAuthorized() {
-      try { return sessionStorage.getItem('automotiveAccess') === 'granted'; }
-      catch { return false; }
-    }
-
-    document.getElementById('authForm').addEventListener('submit', event => {
-      event.preventDefault();
-      const input = document.getElementById('passwordInput');
-      const error = document.getElementById('authError');
-      if (input.value === ACCESS_PASSWORD) {
-        try { sessionStorage.setItem('automotiveAccess', 'granted'); } catch {}
-        input.value = '';
-        error.textContent = '';
-        unlockApp();
-      } else {
-        error.textContent = 'Contraseña incorrecta.';
-        input.select();
-      }
-    });
-
-    if (sessionIsAuthorized()) unlockApp();
+    window.initializeProtectedApp = initializeApp;
+    if (window.__siteAccessGranted) initializeApp();
   </script>
 </body>
 </html>
